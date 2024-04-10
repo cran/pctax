@@ -1,8 +1,8 @@
 ## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
-    collapse = TRUE, cache = TRUE,
-    comment = "#>",
-    dpi = 72
+  collapse = TRUE, cache = TRUE,
+  comment = "#>",
+  dpi = 72
 )
 
 ## ----setup,include=FALSE------------------------------------------------------
@@ -11,9 +11,8 @@ library(pcutils)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  install.packages("devtools")
-#  devtools::install_github("Asa12138/pcutils", dependencies = T)
-#  
-#  devtools::install_github("Asa12138/pctax", dependencies = T)
+#  devtools::install_github("Asa12138/pcutils")
+#  devtools::install_github("Asa12138/pctax")
 
 ## ----lib----------------------------------------------------------------------
 library(pctax)

@@ -11,7 +11,8 @@ permanova(
   each = TRUE,
   method = "adonis",
   dist = "bray",
-  two = FALSE
+  nperm = 999,
+  ...
 )
 }
 \arguments{
@@ -27,7 +28,9 @@ permanova(
 
 \item{dist}{if use pcoa or nmds, your can choose a dist method (default: bray)}
 
-\item{two}{two by two adonis test}
+\item{nperm}{numbers of permutations to perform}
+
+\item{...}{additional}
 }
 \value{
 a g_test object with these columns
