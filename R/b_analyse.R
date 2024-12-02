@@ -214,15 +214,14 @@ plot.b_dist <- function(x, mode = 1, c_group = "inter", ...) {
 #' @references
 #' Graco-Roza, C. et al. (2022) Distance decay 2.0 - A global synthesis of taxonomic and functional turnover in ecological communities. Glob Ecol Biogeogr 31, 1399–1421.
 #' @examples
-#' if (requireNamespace("NST") && requireNamespace("geosphere")) {
+#' if (requireNamespace("geosphere")) {
 #'   library(ggplot2)
 #'   data(otutab, package = "pcutils")
 #'   metadata[, c("lat", "long")] -> geo
 #'   geo_sim(otutab, geo) -> geo_res
-#'   pcutils::my_lm(geo_res[4], "dis.geo", geo_res)
 #' }
 geo_sim <- function(otutab, geo, method = "bray", spe_nwk = NULL, ...) {
-  lib_ps("NST", "geosphere", library = FALSE)
+  lib_ps("geosphere", library = FALSE)
   dis <- NULL
   # 经纬度数据转换
   # 直接欧式距离算不太准
@@ -278,7 +277,7 @@ b_analyse <- function(otutab, ...) {
 #' @export
 #' @method b_analyse data.frame
 #' @rdname b_analyse
-b_analyse.data.frame <- function(otutab, norm = TRUE, method = c("pca", "nmds"), group = NULL,
+b_analyse.data.frame <- function(otutab, norm = TRUE, method = c("pca"), group = NULL,
                                  dist = "bray", ndim = 2, scale = FALSE, ...) {
   Comp1 <- Comp2 <- CS1 <- CS2 <- NMDS1 <- NMDS2 <- PLS_DA1 <- PLS_DA2 <- NULL
   lib_ps("ade4", library = FALSE)
@@ -592,7 +591,7 @@ plot_b_like <- function(plotdat, mode = 1, pal = NULL, sample_label = TRUE, stat
         scale_color_manual(name = groupname2, values = pcutils::get_cols(nlevels(factor(plotdat$level2))))
     }
   }
-  plist <- plist + theme_classic()
+  plist <- plist + pctax_theme
   return(plist)
 }
 
@@ -1353,7 +1352,10 @@ RDA_plot <- function(phy.rda, Group, metadata = NULL, Group2 = NULL, env_rate = 
       stop("can be used only with constrained ordination")
     }
     # 提取样方和环境因子排序坐标，前两轴，I 型标尺
-    rda.scaling1 <- summary(phy.rda, scaling = scale)
+    rda.scaling1 <- vegan::scores(phy.rda,
+      scaling = scale,
+      display = c("sites", "species", "bp")
+    )
     rda.site <- data.frame(rda.scaling1$sites)[1:2]
     rda.site$sample <- rownames(rda.site)
     rda.env <- data.frame(rda.scaling1$biplot)[1:2]

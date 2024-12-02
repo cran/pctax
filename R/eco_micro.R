@@ -212,12 +212,14 @@ ncm <- function(otutab, model = "nls") {
 #' @param ... add
 #' @param mycols mycols
 #' @param text_position text_position
+#' @param pie_text_params pie text parameters
 #'
 #' @return ggplot
 #' @exportS3Method
 #' @method plot ncm_res
 #' @rdname ncm
-plot.ncm_res <- function(x, mycols = c("Above" = "#069870", "Below" = "#e29e02", "In" = "#1e353a"), text_position = NULL, ...) {
+plot.ncm_res <- function(x, mycols = c("Above" = "#069870", "Below" = "#e29e02", "In" = "#1e353a"),
+                         text_position = NULL, pie_text_params = list(size = 2.5), ...) {
   ncm_res <- x
   lib_ps("patchwork", library = FALSE)
   p <- freq.pred <- Lower <- Upper <- freq <- group <- NULL
@@ -238,17 +240,18 @@ plot.ncm_res <- function(x, mycols = c("Above" = "#069870", "Below" = "#e29e02",
     geom_point(data = out, aes(x = log(p), y = freq, color = group), size = 1) +
     scale_colour_manual(values = mycols) +
     annotate("text", x = text_position[1], y = text_position[2], label = paste("Nm = ", sprintf("%.0f", ncm_res[[1]][1] * ncm_res[[1]][3]), sep = ""), size = 4) +
-    annotate("text", x = text_position[1], y = text_position[2] + 0.1, label = paste0("R2 = ", round(ncm_res[[1]][2], 3)), size = 4) +
+    annotate("text", x = text_position[1], y = text_position[2] + 0.1, label = paste0("R^2 == ", round(ncm_res[[1]][2], 3)), size = 4, parse = TRUE) +
     pctax_theme + theme(
       legend.position = c(0.85, 0.3),
       legend.title = element_blank(), legend.background = element_rect(I(0))
-    )
+    ) +
+    guides(color = guide_legend(override.aes = list(size = 3)))
 
   out$group %>%
     table() %>%
     as.data.frame() -> ad
   colnames(ad) <- c("type", "n")
-  pie <- pcutils::gghuan(ad, name = FALSE, text_params = list(size = 2.5)) +
+  pie <- pcutils::gghuan(ad, name = FALSE, text_params = pie_text_params) +
     xlim(0.2, 3.3) +
     scale_fill_manual(values = mycols) +
     theme(
