@@ -10,9 +10,9 @@ library(pctax)
 library(pcutils)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  install.packages("devtools")
-#  devtools::install_github("Asa12138/pcutils")
-#  devtools::install_github("Asa12138/pctax")
+# install.packages("devtools")
+# devtools::install_github("Asa12138/pcutils")
+# devtools::install_github("Asa12138/pctax")
 
 ## ----lib----------------------------------------------------------------------
 library(pctax)

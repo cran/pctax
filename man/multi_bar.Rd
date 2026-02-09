@@ -30,7 +30,7 @@ multi_bar(
 \item{errorbar}{top, bottom, none}
 }
 \value{
-a data.frame
+ggplot
 }
 \description{
 Difference analysis
