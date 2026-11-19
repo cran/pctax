@@ -113,15 +113,9 @@ micro_works <- {
   conda activate metawrap
 
   mkdir -p result/metawrap
-  mkdir -p result/metawrap/gene_fa
-  ~/miniconda3/envs/waste/bin/prodigal -i result/megahit/contigs/${sample}.contigs.fa \\
-      -d result/prodigal/gene_fa/${sample}.gene.fa \\
-      -o result/prodigal/gene_gff/${sample}.gene.gff \\
-      -p meta -f gff
-
-  mkdir -p result/prodigal/fullgene_fa
-  grep 'partial=00' result/prodigal/gene_fa/${sample}.gene.fa | cut -f1 -d ' '| sed 's/>//' > result/prodigal/gene_fa/${sample}.fullid
-  seqkit grep -f result/prodigal/gene_fa/${sample}.fullid result/prodigal/gene_fa/${sample}.gene.fa > result/prodigal/fullgene_fa/${sample}.gene.fa
+  metawrap binning -o result/binning/INITIAL_BINNING_${sample} \\
+    -t 8 -m 8 -a result/megahit/contigs/${sample}.contigs.fa \\
+     --metabat2 --maxbin2 --concoct data/rm_human/${sample}.*.fq
 
 "),
     "cluster" = paste0('
@@ -975,6 +969,7 @@ pre_format_report <- function(dir = "", exclude = NULL, relative_threshold = 1e-
 
   # Clean species names and set as rownames
   clean_species_names <- gsub("s__", "", taxonomy_parts$Species)
+  clean_species_names <- make.names(clean_species_names,unique = TRUE)
   rownames(species_filtered) <- clean_species_names
   rownames(taxonomy_parts) <- clean_species_names
 

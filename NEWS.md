@@ -1,3 +1,22 @@
+# pctax v0.1.8 Notes
+
+## Fixed
+
+- fixed `plot_two_tree` when a tree has singleton nodes. `treelayout` 0.1.0 can leave `NaN` y-coordinates, which made the example fail on R-devel <2026-11-19, Thu>
+- fixed `plot_b_like` global-variable notes and the `sankeyD3` help cross-reference <2026-11-19, Thu>
+- declared where to install `linkET`, `pairwiseAdonis` and `sankeyD3`, and cited the community-assembly methods in Description <2026-11-20, Fri>
+
+## Added
+
+- added `taxonkit_reformat2` function, modified `name_or_id2df` function for new version NCBI taxonomy database <2026-03-27, Fri>
+- added mode 5 for plot.b_res <2026-03-03, Tue>
+
+# pctax v0.1.7 Notes
+
+## Others
+
+- submitted to CRAN <2026-02-09, Mon>
+
 # pctax v0.1.6 Notes
 
 ## Fixed
